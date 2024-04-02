@@ -1917,6 +1917,14 @@ impl<'tcx> TypeErrCtxt<'_, 'tcx> {
                     );
                     if !is_simple_error || terr.must_include_note() {
                         diag.note_expected_found(&expected_label, expected, &found_label, found);
+
+                        if let Some(expected_type_found) = exp_found {
+                            if let ty::Closure(_, args) = expected_type_found.found.kind() {
+                                diag.note_closure_signature(
+                                    args.as_closure().print_as_impl_trait().to_string(),
+                                );
+                            }
+                        }
                     }
                 }
             }
