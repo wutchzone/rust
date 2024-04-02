@@ -721,6 +721,16 @@ impl<'a, G: EmissionGuarantee> Diag<'a, G> {
         self
     }
 
+    #[rustc_lint_diagnostics]
+    pub fn note_closure_signature(&mut self, closure_signature: String) -> &mut Self {
+        self.highlighted_note(vec![
+            StringPart::normal("closure has signature: `"),
+            StringPart::highlighted(closure_signature),
+            StringPart::normal("`"),
+        ]);
+        self
+    }
+
     with_fn! { with_note,
     /// Add a note attached to this diagnostic.
     #[rustc_lint_diagnostics]
