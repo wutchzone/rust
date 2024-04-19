@@ -1942,19 +1942,8 @@ pub trait PrettyPrinter<'tcx>: Printer<'tcx> + fmt::Write {
         write!(self, "impl ")?;
         self.wrap_binder(&sig, |sig, cx| {
             define_scoped_cx!(cx);
-
-            p!(write("{kind}("));
-            for (i, arg) in sig.inputs()[0].tuple_fields().iter().enumerate() {
-                if i > 0 {
-                    p!(", ");
-                }
-                p!(print(arg));
-            }
-            p!(")");
-
-            if !sig.output().is_unit() {
-                p!(" -> ", print(sig.output()));
-            }
+            p!(write("{kind}"));
+            p!(pretty_fn_sig(sig.inputs()[0].tuple_fields().as_slice(), false, sig.output()));
 
             Ok(())
         })
