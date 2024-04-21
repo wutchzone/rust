@@ -238,44 +238,40 @@ impl DiagStyledString {
     pub fn new() -> DiagStyledString {
         DiagStyledString(vec![])
     }
-    pub fn push_normal<S: Into<String>>(&mut self, t: S) {
+    pub fn push_normal<S: Into<SubdiagMessage>>(&mut self, t: S) {
         self.0.push(StringPart::normal(t));
     }
-    pub fn push_highlighted<S: Into<String>>(&mut self, t: S) {
+    pub fn push_highlighted<S: Into<SubdiagMessage>>(&mut self, t: S) {
         self.0.push(StringPart::highlighted(t));
     }
-    pub fn push<S: Into<String>>(&mut self, t: S, highlight: bool) {
+    pub fn push<S: Into<SubdiagMessage>>(&mut self, t: S, highlight: bool) {
         if highlight {
             self.push_highlighted(t);
         } else {
             self.push_normal(t);
         }
     }
-    pub fn normal<S: Into<String>>(t: S) -> DiagStyledString {
+    pub fn normal<S: Into<SubdiagMessage>>(t: S) -> DiagStyledString {
         DiagStyledString(vec![StringPart::normal(t)])
     }
 
-    pub fn highlighted<S: Into<String>>(t: S) -> DiagStyledString {
+    pub fn highlighted<S: Into<SubdiagMessage>>(t: S) -> DiagStyledString {
         DiagStyledString(vec![StringPart::highlighted(t)])
-    }
-
-    pub fn content(&self) -> String {
-        self.0.iter().map(|x| x.content.as_str()).collect::<String>()
     }
 }
 
 #[derive(Debug, PartialEq, Eq)]
 pub struct StringPart {
-    content: String,
+    content: SubdiagMessage,
     style: Style,
 }
 
 impl StringPart {
-    pub fn normal<S: Into<String>>(content: S) -> StringPart {
+    pub fn normal<S: Into<SubdiagMessage>>(content: S) -> StringPart {
         StringPart { content: content.into(), style: Style::NoStyle }
     }
 
-    pub fn highlighted<S: Into<String>>(content: S) -> StringPart {
+    pub fn highlighted<S: Into<SubdiagMessage>>(content: S) -> StringPart {
         StringPart { content: content.into(), style: Style::Highlight }
     }
 }

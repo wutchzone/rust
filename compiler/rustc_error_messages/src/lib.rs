@@ -257,6 +257,7 @@ type FluentId = Cow<'static, str>;
 /// `DiagMessage::with_subdiagnostic_message`) before rendering. However, subdiagnostics from
 /// the `Subdiagnostic` derive refer to Fluent identifiers directly.
 #[rustc_diagnostic_item = "SubdiagMessage"]
+#[derive(Debug, PartialEq, Eq)]
 pub enum SubdiagMessage {
     /// Non-translatable diagnostic message.
     Str(Cow<'static, str>),

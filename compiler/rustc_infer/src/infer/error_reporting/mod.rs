@@ -1382,8 +1382,8 @@ impl<'tcx> TypeErrCtxt<'_, 'tcx> {
                     //     foo::bar::Bar<Zar>
                     //               -------- this part of the path is different
 
-                    let t1_str = t1.to_string();
-                    let t2_str = t2.to_string();
+                    // let t1_str = t1.to_string();
+                    // let t2_str = t2.to_string();
                     let min_len = t1_str.len().min(t2_str.len());
 
                     const SEPARATOR: &str = "::";
